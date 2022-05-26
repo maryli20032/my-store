@@ -1,4 +1,4 @@
-//aqui van todas las rutas de los clientes
+//aqui van todas las rutas de las ordenes
 const express = require ('express');
 const router = express.Router();
 
@@ -6,7 +6,7 @@ const router = express.Router();
 const validatorHandler = require('./../middlewares/validatorHandler');
 
 //requerimos a productSchema para poder validar el esquema de datos
-const {createCustomerSchema, updateCustomerSchema, getCustomerSchema, deleteCustomerSchema} = require('./../schemas/customerSchema');
+const {createItemSchema, updateItemSchema, getItemSchema, deleteItemSchema} = require('./../schemas/itemSchema');
 
 
 router.get('/',(req, res)=>{
@@ -14,26 +14,26 @@ router.get('/',(req, res)=>{
 });
 
 router.get('/:id',
-validatorHandler(getCustomerSchema,'params'),
+validatorHandler(getItemSchema, 'params'),
 async(req, res)=>{
 
 });
 
 router.post('/',
-validatorHandler(createCustomerSchema, 'body'),
+validatorHandler(createItemSchema, 'body'),
 async(req, res)=>{
 
 });
 
 router.put('/:id',
-validatorHandler(getCustomerSchema,'params'),
-validatorHandler(updateCustomerSchema,'body'),
+validatorHandler(getItemSchema,'params'),
+validatorHandler(updateItemSchema,'body'),
 async(req, res)=>{
 
 });
 
 router.delete('/:id',
-validatorHandler(deleteCustomerSchema,'params'),
+validatorHandler(deleteItemSchema,'params'),
 async(req, res)=>{
 
 });

@@ -2,23 +2,39 @@
 const express = require ('express');
 const router = express.Router();
 
-router.get('/',(req, res)=>{
+//requerimos a validatorhandler para validar los datos
+const validatorHandler = require('./../middlewares/validatorHandler');
+
+//requerimos a productSchema para poder validar el esquema de datos
+const {createCategorySchema, updateCategorySchema, getCategorySchema, deleteCategorySchema} = require('./../schemas/categorySchema');
+
+
+router.get('/', async(req, res)=>{
 
 });
 
-router.get('/:id',(req, res)=>{
+router.get('/:id',
+validatorHandler(getCategorySchema, 'params'),
+async (req, res)=>{
 
 });
 
-router.post('/:id',(req, res)=>{
+router.post('/',
+validatorHandler(createCategorySchema, 'body'),
+async (req, res)=>{
 
 });
 
-router.put('/:id',(req, res)=>{
+router.put('/:id',
+validatorHandler(getCategorySchema, 'params'),
+validatorHandler(updateCategorySchema, 'body'),
+async(req, res)=>{
 
 });
 
-router.delete('/:id',(req, res)=>{
+router.delete('/:id',
+validatorHandler(deleteCategorySchema, 'params'),
+async(req, res)=>{
 
 });
 
