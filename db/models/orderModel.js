@@ -1,10 +1,10 @@
-const {model, DataTypes, sequelize}= require('sequelize');
+const {Model, DataTypes, Sequelize}= require('sequelize');
 
 const ORDER_TABLE = 'order';
 const OrderSchema = {
   idOrder:{
     allowNull: true,
-    autoIncrement:true,
+    autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER,
     field:'id_order'
@@ -17,8 +17,6 @@ const OrderSchema = {
   },
   idCliente:{
     allowNull: true,
-    autoIncrement:true,
-    primaryKey: true,
     type: DataTypes.INTEGER,
     field:'id_cliente'
   },
@@ -26,27 +24,33 @@ const OrderSchema = {
     allowNull:false,
     type: DataTypes.DATE,
     field:'fecha',
-    defaultValue: sequelize.now
+    defaultValue: Sequelize.now
   },
   createdAt:{
     allowNull:false,
     type: DataTypes.DATE,
     field:'created_at',
-    defaultValue: sequelize.now
+    defaultValue: Sequelize.NOW
   }
 }
 
-class Order extends model {
-  static associate(){
-
+class Order extends Model {
+  static associate(models){
+    this.belongsToMany(models.Product,{
+      as:'item',
+      through: models.Item,
+      foreignKey: 'id_order',
+      otherKey: 'id_product'
+    })
   };
   static config(sequelize){
     return{
-      sequelize, tableName: ORDER_TABLE,
-      modelName:'order',
-      timeStamps: false
+      sequelize, 
+      tableName: ORDER_TABLE,
+      modelName:'Order',
+      timestamps: false
     }
   }
 }
 
-model.exports = {ORDER_TABLE, OrderSchema, Order}
+module.exports = {ORDER_TABLE, OrderSchema, Order}

@@ -1,6 +1,10 @@
 //aqui van todas las rutas de los usuarios
 const express = require ('express');
+const { user } = require('pg/lib/defaults');
 const router = express.Router();
+
+const UserService = require('./../services/userService');
+const service = new UserService();
 
 //requerimos a validatorhandler para validar los datos
 const validatorHandler = require('./../middlewares/validatorHandler');
@@ -9,33 +13,65 @@ const validatorHandler = require('./../middlewares/validatorHandler');
 const {createUserSchema, updateUserSchema, getUserSchema, deleteUserSchema} = require('./../schemas/userSchema');
 
 
-router.get('/',(req, res)=>{
+router.get('/',(req, res, next)=>{
+try {
 
+} catch (error) {
+  next(error);
+}
 });
 
 router.get('/:id',
 validatorHandler(getUserSchema,'params'),
-async(req, res)=>{
-
+async(req, res, next)=>{
+  try {
+    const { id } = req.params;
+    const user = await service.find(id);
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.post('/',
 validatorHandler(createUserSchema,'body'),
-async(req, res)=>{
+async(req, res, next)=>{
+  try {
+    const body = req.body;
+    const user = await service.create(body);
+    res.json(user);
 
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.put('/:id',
 validatorHandler(getUserSchema,'params'),
 validatorHandler(updateUserSchema, 'body'),
-async(req, res)=>{
+async(req, res, next)=>{
+  try {
+    const {id}  = req.params;
+    const body = req.body;
+    const user = await service.update(id, body);
+    res.json(user);
 
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.delete('/:id',
 validatorHandler(deleteUserSchema, 'params'),
-async(req, res)=>{
+async(req, res, next)=>{
+  try {
+    const {id}  = req.params;
+    await user.service.delete(id);
+    res.json(id);
 
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;

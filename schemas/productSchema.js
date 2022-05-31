@@ -2,7 +2,7 @@
 const joi = require ('joi');
 
 //declaramos el tipo de campo de todos los datos
-const id = joi.string().uuid();
+const id = joi.number().integer();
 const name = joi.string().min(3).max(15);
 const price = joi.number().integer().min(10);
 const image = joi.string().uri();

@@ -1,7 +1,7 @@
-const {model, DataTypes, sequelize}= require('sequelize');
+const {Model, DataTypes, Sequelize}= require('sequelize');
 const {USER_TABLE} = require('./userModel');
 
-const CUSTOMER_TABLE = 'customer';
+const CUSTOMER_TABLE = 'customers';
 const CustomerSchema = {
   idCustomer:{
     allowNull: true,
@@ -37,21 +37,26 @@ const CustomerSchema = {
     allowNull:false,
     type: DataTypes.DATE,
     field:'created_at',
-    defaultValue: sequelize.now
+    defaultValue: Sequelize.NOW
   }
 }
 
-class Customer extends model {
+class Customer extends Model {
   static associate(models){
     this.belongsTo(models.User, {as:'user'});
+    this.hasMany(models.Order, {
+      as: 'orders',
+      foreignKey: 'customerId'
+    });
   };
   static config(sequelize){
     return{
-      sequelize, tableName: CUSTOMER_TABLE,
-      modelName:'customer',
-      timeStamps: false
+      sequelize,
+      tableName: CUSTOMER_TABLE,
+      modelName:'Customer',
+      timestamps: false
     }
   }
 }
 
-model.exports = {CUSTOMER_TABLE, CustomerSchema, Customer}
+module.exports = {CUSTOMER_TABLE, CustomerSchema, Customer}

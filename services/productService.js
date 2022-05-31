@@ -2,11 +2,14 @@
 // podemos tener otros métodos que hagan a la lógica del negocio y también el constructor de la clase
 // recibimos los datos del routing y nos comunicamos con la bd
 
-const boom = require('@hapi/boom');
-const {models}= require('./../libs/sequelize');
+//const boom = require('@hapi/boom');
+const { models } = require('../libs/sequelize');
 
 
 class ProductService {
+  constructor(){
+
+  }
   async create(data){
     const newProduct = await models.Product.create(data);
     return newProduct;
@@ -19,16 +22,16 @@ class ProductService {
 
   async findOne(id) {
     const product = await models.Product.findByPk(id);
-    if(!user){
-      throw boom.notFound('Producto no encontrado')
+    if(!product){
+      //throw boom.notFound('Producto no encontrado')
     }
     return product;
   };
 
   async update(id,changes) {
     const user = await models.User.findByPk(id);
-    if(!user){
-      throw boom.notFound('Producto no encontrado')
+    if(!product){
+      //throw boom.notFound('Producto no encontrado')
     }
     const rta = await user.update(changes);
     return rta;
@@ -36,8 +39,8 @@ class ProductService {
 
   async delete(id){
     const product = await models.Product.findByPk(id);
-    if(!user){
-      throw boom.notFound('Producto no encontrado')
+    if(!product){
+      //throw boom.notFound('Producto no encontrado')
     }
     await product.destroy();
     return {id};

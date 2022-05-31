@@ -1,4 +1,6 @@
-const {model, DataTypes, sequelize}= require('sequelize');
+const {Model, DataTypes, Sequelize}= require('sequelize');
+const {PRODUCT_TABLE}= require('./customerModel');
+const {ORDER_TABLE}= require('./customerModel');
 
 const ITEM_TABLE = 'item';
 const ItemSchema = {
@@ -10,38 +12,47 @@ const ItemSchema = {
     field:'id_item'
   },
   idProduct:{
-    allowNull: true,
-    autoIncrement:true,
-    primaryKey: true,
+    allowNull: false,
     type: DataTypes.INTEGER,
-    field:'id_product'
+    field:'id_product',
+    references:{
+      model:PRODUCT_TABLE,
+      key:'id_product'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   },
   idOrder:{
-    allowNull: true,
-    autoIncrement:true,
-    primaryKey: true,
+    allowNull: false,
     type: DataTypes.INTEGER,
-    field:'id_order'
+    field:'id_order',
+    references:{
+      model:ORDER_TABLE,
+      key: 'id_order'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   },
   createdAt:{
     allowNull:false,
     type: DataTypes.DATE,
     field:'created_at',
-    defaultValue: sequelize.now
+    defaultValue: Sequelize.NOW
   }
 }
 
-class Item extends model {
+class Item extends Model {
   static associate(){
 
   };
   static config(sequelize){
     return{
-      sequelize, tableName: ITEM_TABLE,
-      modelName:'item',
-      timeStamps: false
+      sequelize, 
+      tableName: ITEM_TABLE,
+      modelName:'Item',
+      timestamps: false
     }
   }
 }
 
-model.exports = {ITEM_TABLE, ItemSchema, Item}
+module.exports = {ITEM_TABLE, ItemSchema, Item}
