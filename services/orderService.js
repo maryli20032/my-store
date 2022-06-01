@@ -21,7 +21,9 @@ class OrderService {
       include:[{
         association:'customer',
         include: ['user']
-      }]
+      },
+      'items'
+    ]
     });
 
     if(!order){

@@ -1,53 +1,71 @@
 const {Model, DataTypes, Sequelize}= require('sequelize');
 
-const ORDER_TABLE = 'order';
+const {CUSTOMER_TABLE}= require('./customerModel');
+
+const ORDER_TABLE = 'orders';
 const OrderSchema = {
-  idOrder:{
-    allowNull: true,
+  id: {
+    allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
-    field:'id_order'
+    type: DataTypes.INTEGER
   },
-  estado:{
+  estate:{
     allowNull: false,
     type: DataTypes.STRING,
     unique: true,
     field:'estado'
   },
-  idCliente:{
-    allowNull: true,
+  customerId: {
+    field: 'customer_id',
+    allowNull: false,
     type: DataTypes.INTEGER,
-    field:'id_cliente'
+
+    references: {
+      model: CUSTOMER_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+
   },
-  fecha:{
+  Date:{
     allowNull:false,
     type: DataTypes.DATE,
-    field:'fecha',
-    defaultValue: Sequelize.now
-  },
-  createdAt:{
-    allowNull:false,
-    type: DataTypes.DATE,
-    field:'created_at',
+    field:'date',
     defaultValue: Sequelize.NOW
-  }
+  },
+  createdAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'created_at',
+    defaultValue: Sequelize.NOW,
+  },
+
 }
 
 class Order extends Model {
-  static associate(models){
-    this.belongsToMany(models.Product,{
-      as:'item',
+
+  static associate(models) {
+
+    this.belongsTo(models.Customer, {
+      as: 'customer',
+    });
+    this.belongsToMany(models.Product, {
+      as: 'items',
       through: models.Item,
-      foreignKey: 'id_order',
-      otherKey: 'id_product'
-    })
-  };
-  static config(sequelize){
-    return{
-      sequelize, 
+      foreignKey: 'orderId',
+      otherKey: 'productId'
+    });
+
+  }
+
+
+  static config(sequelize) {
+    return {
+      sequelize,
       tableName: ORDER_TABLE,
-      modelName:'Order',
+      modelName: 'Order',
       timestamps: false
     }
   }

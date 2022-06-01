@@ -3,57 +3,69 @@ const {USER_TABLE} = require('./userModel');
 
 const CUSTOMER_TABLE = 'customers';
 const CustomerSchema = {
-  idCustomer:{
-    allowNull: true,
-    autoIncrement:true,
+  id: {
+    allowNull: false,
+    autoIncrement: true,
     primaryKey: true,
-    field:'id_customer',
     type: DataTypes.INTEGER
   },
-  idUser:{
-    allowNull: true,
-    field:'id_user',
-    unique: true,
+  userId: {
+    field: 'user_id',
+    allowNull: false,
     type: DataTypes.INTEGER,
-    references:{
-      model:USER_TABLE,
-      key: 'id_user'
+    unique: true,
+
+    references: {
+      model: USER_TABLE,
+      key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
+
   },
-  nameCustomer:{
+  name: {
     allowNull: false,
     type: DataTypes.STRING,
-    unique: true,
-    field:'name_customer',
+  },
+  lastName: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'last_name',
+  },
+  phone: {
+    allowNull: true,
+    type: DataTypes.STRING,
   },
   address:{
     allowNull: false,
     type: DataTypes.STRING,
     unique: true
   },
-  createdAt:{
-    allowNull:false,
+  createdAt: {
+    allowNull: false,
     type: DataTypes.DATE,
-    field:'created_at',
-    defaultValue: Sequelize.NOW
-  }
+    field: 'created_at',
+    defaultValue: Sequelize.NOW,
+  },
 }
 
 class Customer extends Model {
-  static associate(models){
-    this.belongsTo(models.User, {as:'user'});
+
+  static associate(models) {
+
+    this.belongsTo(models.User, {as: 'user'});
     this.hasMany(models.Order, {
       as: 'orders',
       foreignKey: 'customerId'
     });
-  };
-  static config(sequelize){
-    return{
+
+  }
+
+  static config(sequelize) {
+    return {
       sequelize,
       tableName: CUSTOMER_TABLE,
-      modelName:'Customer',
+      modelName: 'Customer',
       timestamps: false
     }
   }

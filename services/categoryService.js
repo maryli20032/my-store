@@ -12,19 +12,21 @@ class CategoryService {
   };
 
   async find(){
-    const rta= await models.Category.findAll();
-    return rta;
+    const categories= await models.Category.findAll();
+    return categories;
   };
 
   async findOne(id) {
-    const category = await models.Category.findByPk(id);
+    const category = await models.Category.findByPk(id,{
+      include:['products']
+    });
     if(!category){
       //throw boom.notFound('Category not Found');
     }
     return category;
   };
 
-  async update(id,changes) {
+  async update(id, changes) {
     const category = await models.Category.findByPk(id);
     if(!category){
       //throw boom.notFound('Category not Found');

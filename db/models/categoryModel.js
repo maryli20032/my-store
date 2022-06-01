@@ -1,40 +1,43 @@
 const {Model, DataTypes, Sequelize}= require('sequelize');
 
-const CATEGORY_TABLE = 'Categories';
+const CATEGORY_TABLE = 'categories';
 const CategorySchema = {
-  idCategory:{
-    allowNull: true,
-    autoIncrement:true,
-    primaryKey: true,
-    type: DataTypes.INTEGER,
-    field:'id_category'
-  },
-  nameCategory:{
+  id: {
     allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: DataTypes.INTEGER
+  },
+  name: {
     type: DataTypes.STRING,
     unique: true,
-    field:'name_category'
+    allowNull: false,
   },
-  createdAt:{
-    allowNull:false,
+  createdAt: {
+    allowNull: false,
     type: DataTypes.DATE,
-    field:'created_at',
-    defaultValue: Sequelize.NOW
-  }
+    field: 'created_at',
+    defaultValue: Sequelize.NOW,
+  },
 }
 
+
 class Category extends Model {
-  static associate(models){
-    this.hasMany(models.Product,{
-      as: 'product',
+
+  static associate(models) {
+    /*
+    this.hasMany(models.Product, {
+      as: 'products',
       foreignKey: 'categoryId'
     });
-  };
-  static config(sequelize){
-    return{
-      sequelize, 
+    */
+  }
+
+  static config(sequelize) {
+    return {
+      sequelize,
       tableName: CATEGORY_TABLE,
-      modelName:'Category',
+      modelName: 'Category',
       timestamps: false
     }
   }

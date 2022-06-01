@@ -19,7 +19,11 @@ router.get('/',(req, res, next)=>{
 router.get('/:id',
 validatorHandler(getItemSchema, 'params'),
 async(req, res, next)=>{
+try {
 
+} catch (error) {
+  next(error);
+}
 });
 
 router.post('/addItem',
@@ -38,13 +42,21 @@ router.put('/:id',
 validatorHandler(getItemSchema,'params'),
 validatorHandler(updateItemSchema,'body'),
 async(req, res, next)=>{
+try {
 
+} catch (error) {
+  next(error);
+}
 });
 
 router.delete('/:id',
 validatorHandler(deleteItemSchema,'params'),
 async(req, res, next)=>{
+try {
 
+} catch (error) {
+  next(error);
+}
 });
 
 module.exports = router;

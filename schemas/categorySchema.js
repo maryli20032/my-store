@@ -13,8 +13,7 @@ const createCategorySchema = joi.object({
 
 //declaramos el esquema para la actualizacion de una categoría
 const updateCategorySchema = joi.object({
-  nameCategory: nameCategory.required(),
-  idCategory: idCategory.required()
+  nameCategory: nameCategory
 });
 
 //declaramos el esquema para obtener de una categoría

@@ -5,26 +5,15 @@ const setupModels = require('./../db/models');
 
 const USER = encodeURIComponent(config.dbUser);
 const PASSWORD = encodeURIComponent(config.dbPassword);
-const URI = `postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
+const URI = `mysql://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
 
-if (config.isProd) {
-  options.dialectOptions = {
-    ssl: {
-      rejectUnauthorized: false
-    }
-  }
-}
-
-const options = {
-  dialect: 'postgres',
-  //logging: config.isProd ? false : true,
+const sequelize = new Sequelize(URI, {
+  dialect: 'mysql',
+  logging: true,
   logging: console.log
-}
-
-const sequelize = new Sequelize(config.dbUrl, options);
+});
 setupModels(sequelize);
-
-//sequelize.sync();
+sequelize.sync(); //con esto le decimos que cree todas las tablas que definimos en models
 
 module.exports = sequelize;
 

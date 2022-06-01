@@ -3,57 +3,63 @@ const {CATEGORY_TABLE}= require('./categoryModel');
 
 const PRODUCT_TABLE = 'products';
 const ProductSchema = {
-  idProduct:{
-    allowNull: true,
-    autoIncrement:true,
+  id: {
+    allowNull: false,
+    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
-    field:'id_product'
+    type: DataTypes.INTEGER
   },
-  nameProduct:{
-    allowNull: false,
+  name: {
     type: DataTypes.STRING,
-    unique: true,
-    field:'name_product'
-  },
-  codeProduct:{
     allowNull: false,
+  },
+  image: {
     type: DataTypes.STRING,
-    field:'code_product'
-  },
-  precioProduct:{
     allowNull: false,
-    type: DataTypes.DOUBLE,
-    field:'precio_product'
   },
-  stockProduct:{
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  code:{
+    allowNull: false,
+    type: DataTypes.STRING
+  },
+  price: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  stock:{
     allowNull: false,
     type: DataTypes.INTEGER,
-    field:'stock_product'
   },
-  idCategory:{
+  categoryId: {
+    field: 'category_id',
     allowNull: false,
     type: DataTypes.INTEGER,
-    field:'id_category',
-    references:{
+
+    references: {
       model: CATEGORY_TABLE,
-      key: 'id_category'
+      key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
+
   },
-  createdAt:{
-    allowNull:false,
+  createdAt: {
+    allowNull: false,
     type: DataTypes.DATE,
-    field:'created_at',
-    defaultValue: Sequelize.NOW
-  }
+    field: 'created_at',
+    defaultValue: Sequelize.NOW,
+  },
 }
 
 class Product extends Model {
 
   static associate(models) {
+
     this.belongsTo(models.Category, { as: 'category' });
+
   }
 
   static config(sequelize) {
