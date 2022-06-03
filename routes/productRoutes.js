@@ -30,7 +30,7 @@ validatorHandler(getProductSchema, 'params'),
  async(req, res, next) => {
   try {
     const { id } = req.params;
-    const product = await service.find(id);
+    const product = await service.findOne(id);
     res.json(product);
   } catch (error) {
     next(error);
@@ -50,7 +50,7 @@ async(req, res, next) => {
   }
 });
 
-router.put('/:id',
+router.patch('/:id',
 validatorHandler(getProductSchema, 'params'),
 validatorHandler(updateProductSchema, 'body'),
 async(req, res, next) => {

@@ -13,9 +13,10 @@ const validatorHandler = require('./../middlewares/validatorHandler');
 const {createUserSchema, updateUserSchema, getUserSchema, deleteUserSchema} = require('./../schemas/userSchema');
 
 
-router.get('/',(req, res, next)=>{
+router.get('/',async(req, res, next)=>{
 try {
-
+  const users = await service.find(req.query);
+      res.json(users);
 } catch (error) {
   next(error);
 }
@@ -26,7 +27,7 @@ validatorHandler(getUserSchema,'params'),
 async(req, res, next)=>{
   try {
     const { id } = req.params;
-    const user = await service.find(id);
+    const user = await service.findOne(id);
     res.json(user);
   } catch (error) {
     next(error);
@@ -46,7 +47,7 @@ async(req, res, next)=>{
   }
 });
 
-router.put('/:id',
+router.patch('/:id',
 validatorHandler(getUserSchema,'params'),
 validatorHandler(updateUserSchema, 'body'),
 async(req, res, next)=>{
@@ -66,7 +67,7 @@ validatorHandler(deleteUserSchema, 'params'),
 async(req, res, next)=>{
   try {
     const {id}  = req.params;
-    await user.service.delete(id);
+    await service.delete(id);
     res.json(id);
 
   } catch (error) {

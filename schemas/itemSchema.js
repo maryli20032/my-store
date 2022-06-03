@@ -18,17 +18,19 @@ const createItemSchema = joi.object({
 
 //declaramos el esquema para la actualizacion de una orden
 const updateItemSchema = joi.object({
-
+  idOrder : idOrder,
+  idproduct : idproduct,
+  amount : amount
 });
 
 //declaramos el esquema para obtener de una orden
 const getItemSchema = joi.object({
-
+idItem : idItem.required()
 });
 
 //declaramos el esquema para eliminar una orden
 const deleteItemSchema = joi.object({
-
+  idItem : idItem.required()
 });
 
 //exportamos los esquemas

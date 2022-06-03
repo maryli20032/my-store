@@ -20,7 +20,7 @@ const ItemSchema = {
       key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onDelete: 'NO ACTION'
 
   },
   orderId: {
@@ -33,7 +33,7 @@ const ItemSchema = {
       key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onDelete: 'NO ACTION'
 
   },
   amount: {

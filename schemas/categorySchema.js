@@ -2,28 +2,28 @@
 const joi = require ('joi');
 
 //declaramos el tipo de campo de todos los datos
-const idCategory = joi.number().integer();
-const nameCategory = joi.string().min(3).max(15);
+const id = joi.number().integer();
+const name = joi.string().min(3).max(15);
 
 
 //declaramos el esquema para la creacion de una categoría
 const createCategorySchema = joi.object({
-  nameCategory: nameCategory.required()
+  name: name.required(),
 });
 
 //declaramos el esquema para la actualizacion de una categoría
 const updateCategorySchema = joi.object({
-  nameCategory: nameCategory
+  name: name
 });
 
 //declaramos el esquema para obtener de una categoría
 const getCategorySchema = joi.object({
-  idCategory: idCategory.required()
+  id: id.required()
 });
 
 //declaramos el esquema para eliminar una categoría
 const deleteCategorySchema = joi.object({
-  idCategory: idCategory.required()
+  id: id.required()
 });
 
 //exportamos los esquemas

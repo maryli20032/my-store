@@ -12,15 +12,15 @@ function errorHandler(err, req, res, next) {
     stack: err.stack
   });
 }
-
-//function boomErrorHandler (err,req,res,next){
-//if(err.isBoom){
-  //const {output} = err;
-  //res.status(output.statusCode).json(output.payload);
-//}
-//next(err);
-//}
-
+/*
+function boomErrorHandler (err,req,res,next){
+if(err.isBoom){
+  const {output} = err;
+  res.status(output.statusCode).json(output.payload);
+}
+next(err);
+}
+*/
 function ormErrorHandler(err, req, res, next) {
   if(err instanceof ValidationError) {
     res.status(409).json({

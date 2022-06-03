@@ -25,7 +25,7 @@ validatorHandler(getOrderSchema, 'params'),
 async(req, res, next)=>{
   try {
     const { id } = req.params;
-    const order = await service.find(id);
+    const order = await service.findOne(id);
     res.json(order);
   } catch (error) {
     next(error);

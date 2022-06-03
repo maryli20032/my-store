@@ -15,7 +15,8 @@ const { custom } = require('joi');
 
 router.get('/',async(req, res, next)=>{
   try {
-    const customer = await service.find();
+
+    const customer = await service.find(req.query);
   res.json(customer);
   } catch (error) {
     next(error);
@@ -27,7 +28,7 @@ validatorHandler(getCustomerSchema,'params'),
 async(req, res, next)=>{
   try {
     const { id } = req.params;
-    const customer = await service.find(id);
+    const customer = await service.findOne(id);
     res.json(customer);
   } catch (error) {
     next(error);
@@ -47,7 +48,7 @@ async(req, res, next)=>{
   }
 });
 
-router.put('/:id',
+router.patch('/:id',
 validatorHandler(getCustomerSchema,'params'),
 validatorHandler(updateCustomerSchema,'body'),
 async(req, res, next)=>{

@@ -30,11 +30,11 @@ class ProductService {
   };
 
   async update(id,changes) {
-    const user = await models.User.findByPk(id);
+    const product = await models.Product.findByPk(id);
     if(!product){
       //throw boom.notFound('Producto no encontrado')
     }
-    const rta = await user.update(changes);
+    const rta = await product.update(changes);
     return rta;
   };
 

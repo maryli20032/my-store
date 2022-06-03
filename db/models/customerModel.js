@@ -20,7 +20,7 @@ const CustomerSchema = {
       key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onDelete: 'NO ACTION'
 
   },
   name: {
@@ -54,6 +54,7 @@ class Customer extends Model {
   static associate(models) {
 
     this.belongsTo(models.User, {as: 'user'});
+
     this.hasMany(models.Order, {
       as: 'orders',
       foreignKey: 'customerId'
