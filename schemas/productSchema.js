@@ -10,6 +10,11 @@ const categoryId = joi.number().integer();
 const description = joi.string().min(1).max(100);
 const code = joi.string().min(1).max(15);
 const stock = joi.number().integer().min(10);
+const limit =joi.number().integer();
+const offset = joi.number().integer();
+const price_min = joi.number();
+const price_max = joi.number();
+
 
 
 //declaramos el esquema para la creacion de un producto
@@ -44,5 +49,13 @@ const deleteProductSchema = joi.object({
   id: id.required()
 });
 
+const queryProductSchema = joi.Objetc({
+  limit,
+  offset,
+  price,
+  price_min,
+  price_max
+})
+
 //exportamos los esquemas
-module.exports= {createProductSchema, updateProductSchema, getProductSchema, deleteProductSchema};
+module.exports= {createProductSchema, updateProductSchema, getProductSchema, deleteProductSchema, queryProductSchema};

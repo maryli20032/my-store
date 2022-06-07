@@ -9,12 +9,12 @@ const service = new ProductService();
 const validatorHandler = require('./../middlewares/validatorHandler');
 
 //requerimos a productSchema para poder validar el esquema de datos
-const {createProductSchema, updateProductSchema, getProductSchema, deleteProductSchema} = require('./../schemas/productSchema');
+const {createProductSchema, updateProductSchema, getProductSchema, deleteProductSchema, queryProductSchema} = require('./../schemas/productSchema');
 
 
 
 router.get('/',
-
+validatorHandler (queryProductSchema, 'query'),
   async (req, res, next) => {
     try {
       const products = await service.find(req.query);
@@ -26,16 +26,17 @@ router.get('/',
 );
 
 router.get('/:id',
-validatorHandler(getProductSchema, 'params'),
- async(req, res, next) => {
-  try {
-    const { id } = req.params;
-    const product = await service.findOne(id);
-    res.json(product);
-  } catch (error) {
-    next(error);
+  validatorHandler(getProductSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const product = await service.findOne(id);
+      res.json(product);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.post('/',
 validatorHandler(createProductSchema, 'body'),

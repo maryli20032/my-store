@@ -2,8 +2,9 @@
 // podemos tener otros métodos que hagan a la lógica del negocio y también el constructor de la clase
 // recibimos los datos del routing y nos comunicamos con la bd
 
-//const boom = require('@hapi/boom');
+
 const {models}= require('./../libs/sequelize');
+//const boom = require('@hapi/boom');
 
 class CategoryService {
   async create(data){
@@ -21,7 +22,7 @@ class CategoryService {
       include:['products']
     });
     if(!category){
-      //throw boom.notFound('Category not Found');
+     //throw boom.notFound('Category not Found');
     }
     return category;
   };
@@ -29,7 +30,7 @@ class CategoryService {
   async update(id, changes) {
     const category = await models.Category.findByPk(id);
     if(!category){
-      //throw boom.notFound('Category not Found');
+     //throw boom.notFound('Category not Found');
     }
     const rta = await category.update(changes);
     return rta;
@@ -38,7 +39,7 @@ class CategoryService {
   async delete(id){
     const category = await models.Category.findByPk(id);
     if(!category){
-      //throw boom.notFound('Category not Found');
+     //throw boom.notFound('Category not Found');
     }
     await category.destroy();
     return {id};

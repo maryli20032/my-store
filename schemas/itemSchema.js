@@ -3,23 +3,24 @@ const joi = require ('joi');
 
 //declaramos el tipo de campo de todos los datos
 const idItem = joi.number().integer();
-const idOrder = joi.number().integer();
-const idproduct = joi.number().integer();
+const orderId = joi.number().integer();
+const  productId = joi.number().integer();
 const amount = joi.number().integer().min(1);
 
 
 
 //declaramos el esquema para la creacion de una orden
 const createItemSchema = joi.object({
-  idOrder : idOrder.required(),
-  idproduct : idproduct.required(),
+  orderId : orderId.required(),
+  productId :  productId.required(),
   amount : amount.required()
 });
 
+
 //declaramos el esquema para la actualizacion de una orden
 const updateItemSchema = joi.object({
-  idOrder : idOrder,
-  idproduct : idproduct,
+  orderId : orderId,
+  productId :  productId,
   amount : amount
 });
 
