@@ -49,7 +49,7 @@ const deleteProductSchema = joi.object({
   id: id.required()
 });
 
-const queryProductSchema = joi.Objetc({
+const queryProductSchema = joi.object({
   limit,
   offset,
   price,

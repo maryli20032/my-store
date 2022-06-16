@@ -8,11 +8,17 @@ const service = new OrderService();
 //requerimos a validatorhandler para validar los datos
 const validatorHandler = require('./../middlewares/validatorHandler');
 
+//requerimos a authHandler para verificar los permisos segun sus roles
+const { checkRoles } = require('./../middlewares/authHandler');
+
 //requerimos a productSchema para poder validar el esquema de datos
 const {createOrderSchema, updateOrderSchema, getOrderSchema, deleteOrderSchema} = require('./../schemas/orderSchema');
 
 
-router.get('/',(req, res, next)=>{
+router.get('/',
+passport.authenticate('jwt', { session: false }),
+checkRoles('Admin'),
+(req, res, next)=>{
 try {
 
 } catch (error) {
@@ -21,6 +27,8 @@ try {
 });
 
 router.get('/:id',
+passport.authenticate('jwt', { session: false }),
+checkRoles('Admin', 'customer'),
 validatorHandler(getOrderSchema, 'params'),
 async(req, res, next)=>{
   try {
@@ -33,6 +41,8 @@ async(req, res, next)=>{
 });
 
 router.post('/',
+passport.authenticate('jwt', { session: false }),
+checkRoles('Admin','customer'),
 validatorHandler(createOrderSchema, 'body'),
 async(req, res, next)=>{
   try {
@@ -46,6 +56,8 @@ async(req, res, next)=>{
 });
 
 router.put('/:id',
+passport.authenticate('jwt', { session: false }),
+checkRoles('Admin'),
 validatorHandler(getOrderSchema,'params'),
 validatorHandler(updateOrderSchema,'body'),
 async(req, res, next)=>{
@@ -61,6 +73,8 @@ async(req, res, next)=>{
 });
 
 router.delete('/:id',
+passport.authenticate('jwt', { session: false }),
+checkRoles('Admin'),
 validatorHandler(deleteOrderSchema,'params'),
 async(req, res, next)=>{
   try {

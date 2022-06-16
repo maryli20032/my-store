@@ -9,11 +9,17 @@ const service = new UserService();
 //requerimos a validatorhandler para validar los datos
 const validatorHandler = require('./../middlewares/validatorHandler');
 
+//requerimos a authHandler para verificar los permisos segun sus roles
+const { checkRoles } = require('./../middlewares/authHandler');
+
 //requerimos a productSchema para poder validar el esquema de datos
 const {createUserSchema, updateUserSchema, getUserSchema, deleteUserSchema} = require('./../schemas/userSchema');
 
 
-router.get('/',async(req, res, next)=>{
+router.get('/',
+passport.authenticate('jwt', { session: false }),
+checkRoles('Admin'),
+async(req, res, next)=>{
 try {
   const users = await service.find(req.query);
       res.json(users);
@@ -23,6 +29,8 @@ try {
 });
 
 router.get('/:id',
+passport.authenticate('jwt', { session: false }),
+checkRoles('Admin'),
 validatorHandler(getUserSchema,'params'),
 async(req, res, next)=>{
   try {
@@ -35,6 +43,8 @@ async(req, res, next)=>{
 });
 
 router.post('/',
+passport.authenticate('jwt', { session: false }),
+checkRoles('Admin'),
 validatorHandler(createUserSchema,'body'),
 async(req, res, next)=>{
   try {
@@ -48,6 +58,8 @@ async(req, res, next)=>{
 });
 
 router.patch('/:id',
+passport.authenticate('jwt', { session: false }),
+checkRoles('Admin'),
 validatorHandler(getUserSchema,'params'),
 validatorHandler(updateUserSchema, 'body'),
 async(req, res, next)=>{
@@ -63,6 +75,8 @@ async(req, res, next)=>{
 });
 
 router.delete('/:id',
+passport.authenticate('jwt', { session: false }),
+checkRoles('Admin'),
 validatorHandler(deleteUserSchema, 'params'),
 async(req, res, next)=>{
   try {
