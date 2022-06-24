@@ -11,6 +11,24 @@ class OrderService {
     return newOrder;
   };
 
+  async findbyUser(userId){
+    const rta= await models.Order.findAll({
+      /*como tenemos una asociacion entre cliente y ordenes de compras, y tenemos una asociacion entre cliente y usuario
+      y tenemos el id del usuario usamos esta clausula where donde le decimos que queremos las ordenes del usuario
+      usando la vinculacion que hay entre cliente y usuario.*/
+
+      where:{
+        '$customer.user.id$':userId
+      },
+      include:[{
+        association:'customer',
+        include: ['user']
+      }
+    ]
+    });
+    return rta;
+  };
+
   async find(){
     const rta= await models.Order.findAll();
     return rta;
@@ -27,7 +45,7 @@ class OrderService {
     });
 
     if(!order){
-      //throw boom.notFound('Order Not Found');
+      throw boom.notFound('Order Not Found');
     }
     return order;
   };
@@ -35,7 +53,7 @@ class OrderService {
   async update(id,changes) {
     const order = await models.Order.findByPk(id);
     if(!order){
-      //throw boom.notFound('Order Not Found');
+      throw boom.notFound('Order Not Found');
     }
     const rta = await order.update(changes);
     return rta;
@@ -44,7 +62,7 @@ class OrderService {
   async delete(id){
     const order = await models.Order.findByPk(id);
     if(!order){
-      //throw boom.notFound('Order Not Found');
+      throw boom.notFound('Order Not Found');
     }
     await order.destroy();
     return {id};

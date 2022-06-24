@@ -4,7 +4,7 @@
 
 
 const { models } = require('../libs/sequelize');
-//const boom = require('@hapi/boom');
+const boom = require('@hapi/boom');
 
 
 class ProductService {
@@ -45,7 +45,7 @@ class ProductService {
     const product = await models.Product.findByPk(id);
     if(!product){
 
-      //throw boom.notFound('product not found');
+    throw boom.notFound('product not found');
     }
     return product;
   };
@@ -53,7 +53,7 @@ class ProductService {
   async update(id,changes) {
     const product = await models.Product.findByPk(id);
     if(!product){
-      //throw boom.notFound('Producto no encontrado')
+    throw boom.notFound('Producto no encontrado')
     }
     const rta = await product.update(changes);
     return rta;
@@ -62,7 +62,7 @@ class ProductService {
   async delete(id){
     const product = await models.Product.findByPk(id);
     if(!product){
-      //throw boom.notFound('Producto no encontrado')
+      throw boom.notFound('Producto no encontrado')
     }
     await product.destroy();
     return {id};

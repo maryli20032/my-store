@@ -1,6 +1,7 @@
 //aqui van todas las rutas de los clientes
 const express = require ('express');
 const router = express.Router();
+const passport = require('passport');
 
 const CustomerService = require('./../services/customerService');
 const service = new CustomerService();

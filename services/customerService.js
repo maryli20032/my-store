@@ -3,7 +3,7 @@
 // recibimos los datos del routing y nos comunicamos con la bd
 
 const {models}= require('./../libs/sequelize');
-//const boom = require('@hapi/boom');
+const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt');
 
 class CustomerService {
@@ -34,7 +34,7 @@ class CustomerService {
   async findOne(id) {
     const customer = await models.Customer.findByPk(id);
     if(!customer){
-      //throw boom.notFound('Customer not Found');
+      throw boom.notFound('Customer not Found');
     }
     return customer;
   };
@@ -42,7 +42,7 @@ class CustomerService {
   async update(id,changes) {
     const customer = await models.Customer.findByPk(id);
     if(!customer){
-      //throw boom.notFound('Customer not Found');
+      throw boom.notFound('Customer not Found');
     }
     const rta = await customer.update(changes);
     return rta;
@@ -51,7 +51,7 @@ class CustomerService {
   async delete(id){
     const customer = await models.Customer.findByPk(id);
     if(!customer){
-      //throw boom.notFound('Customer not Found');
+      throw boom.notFound('Customer not Found');
     }
     await customer.destroy();
     return {id};

@@ -2,7 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const routerApi = require('./routes');
-const { logErrors, errorHandler, ormErrorHandler } = require('./middlewares/errorHandler');
+const { logErrors, errorHandler, ormErrorHandler, boomErrorHandler } = require('./middlewares/errorHandler');
 const {checkApiKey}= require('./middlewares/authHandler');
 
 const app = express();
@@ -39,7 +39,7 @@ routerApi(app);
 
 app.use(logErrors);
 app.use(ormErrorHandler);
-//app.use(boomErrorHandler);
+app.use(boomErrorHandler);
 app.use(errorHandler);
 
 app.listen(port, () => {

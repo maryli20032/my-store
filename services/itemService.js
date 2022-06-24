@@ -3,7 +3,7 @@
 // recibimos los datos del routing y nos comunicamos con la bd
 
 const {models}= require('./../libs/sequelize');
-//const boom = require('@hapi/boom');
+const boom = require('@hapi/boom');
 
 class ItemService {
   async create(data){
@@ -28,7 +28,7 @@ class ItemService {
     });
 
     if(!item){
-      //throw boom.notFound('Item no encontrado');
+      throw boom.notFound('Item no encontrado');
     }
     return item;
   };
@@ -36,7 +36,7 @@ class ItemService {
   async update(id,changes) {
     const item = await models.Item.findByPk(id);
     if(!item){
-      //throw boom.notFound('Item no encontrado');
+      throw boom.notFound('Item no encontrado');
     }
     const rta = await item.update(changes);
     return rta;
@@ -45,7 +45,7 @@ class ItemService {
   async delete(id){
     const item = await models.Item.findByPk(id);
     if(!item){
-      //throw boom.notFound('Item no encontrado');
+      throw boom.notFound('Item no encontrado');
     }
     await item.destroy();
     return {id};

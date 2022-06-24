@@ -4,7 +4,7 @@
 
 
 const {models}= require('./../libs/sequelize');
-//const boom = require('@hapi/boom');
+const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt');
 
 class UserService {
@@ -34,7 +34,7 @@ class UserService {
   async findOne(id) {
     const user = await models.User.findByPk(id);
     if(!user){
-      //throw boom.notFound('User not Found');
+      throw boom.notFound('User not Found');
     }
     return user;
   };
@@ -42,7 +42,7 @@ class UserService {
   async update(id,changes) {
     const user = await models.User.findByPk(id);
     if(!user){
-      //throw boom.notFound('User not Found');
+      throw boom.notFound('User not Found');
     }
     const rta = await user.update(changes);
     return rta;
@@ -51,7 +51,7 @@ class UserService {
   async delete(id){
     const user = await models.User.findByPk(id);
     if(!user){
-      //throw boom.notFound('User not Found');
+      throw boom.notFound('User not Found');
     }
     await user.destroy();
     return {id};
