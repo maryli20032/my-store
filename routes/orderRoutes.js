@@ -4,6 +4,7 @@ const router = express.Router();
 
 const OrderService = require('./../services/orderService');
 const service = new OrderService();
+
 const passport = require('passport');
 
 //requerimos a validatorhandler para validar los datos
@@ -19,12 +20,13 @@ const {createOrderSchema, updateOrderSchema, getOrderSchema, deleteOrderSchema} 
 router.get('/',
 passport.authenticate('jwt', { session: false }),
 checkRoles('Admin'),
-(req, res, next)=>{
-try {
-
-} catch (error) {
-
-}
+async(req, res, next)=>{
+  try {
+    const orders =await service.find();
+  res.json(orders);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get('/:id',

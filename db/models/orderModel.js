@@ -13,7 +13,6 @@ const OrderSchema = {
   estate:{
     allowNull: false,
     type: DataTypes.STRING,
-    unique: true,
     field:'estado'
   },
   customerId: {
@@ -41,12 +40,13 @@ const OrderSchema = {
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
+  //este es un campo virtual para calcular el total de la orden de compra
   total: {
     type: DataTypes.VIRTUAL,
     get() {
       if (this.items && this.items.length > 0) {
         return this.items.reduce((total, item) => {
-          return total + (item.price * item.OrderProduct.amount);
+          return total + (item.price * item.ItemOrder.amount);
         }, 0);
       }
       return 0;
@@ -65,7 +65,7 @@ class Order extends Model {
 
     this.belongsToMany(models.Product, {
       as: 'items',
-      through: models.Item,
+      through: models.ItemOrder,
       foreignKey: 'orderId',
       otherKey: 'productId'
     });

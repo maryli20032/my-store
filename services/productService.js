@@ -15,7 +15,7 @@ class ProductService {
     return newProduct;
   };
 
-  async find(){
+  async find(query){
     const options = {
       include:['category'],
       where:{}
@@ -54,6 +54,19 @@ class ProductService {
     const product = await models.Product.findByPk(id);
     if(!product){
     throw boom.notFound('Producto no encontrado')
+    }
+    const rta = await product.update(changes);
+    return rta;
+  };
+
+  async updateStock(id,changes) {
+    const product = await models.Product.findByPk(id);
+    if(!product){
+    throw boom.notFound('Producto no encontrado')
+    }
+
+    if (product.stock < changes.stock) {
+      throw boom.notFound('producto no encontrado');
     }
     const rta = await product.update(changes);
     return rta;

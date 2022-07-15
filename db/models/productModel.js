@@ -60,6 +60,12 @@ class Product extends Model {
 
     this.belongsTo(models.Category, { as: 'category' });
 
+    this.belongsToMany(models.Order, {
+      as: 'items',
+      through: models.ItemOrder,
+      foreignKey: 'orderId',
+      otherKey: 'productId'
+    });
   }
 
   static config(sequelize) {

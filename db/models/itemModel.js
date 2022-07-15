@@ -49,7 +49,7 @@ const ItemSchema = {
 
 }
 
-class Item extends Model {
+class ItemOrder extends Model {
   static associate(){
 
   };
@@ -57,10 +57,10 @@ class Item extends Model {
     return{
       sequelize,
       tableName: ITEM_TABLE,
-      modelName:'Item',
+      modelName:'ItemOrder',
       timestamps: false
     }
   }
 }
 
-module.exports = {ITEM_TABLE, ItemSchema, Item};
+module.exports = {ITEM_TABLE, ItemSchema, ItemOrder};

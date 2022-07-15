@@ -5,12 +5,14 @@ const joi = require ('joi');
 const id = joi.number().integer();
 const email = joi.string().email();
 const password = joi.string();
+const role = joi.string();
 
 
 //declaramos el esquema para la creacion de un usuario
 const createUserSchema = joi.object({
 email: email.required(),
-password: password.required()
+password: password.required(),
+role: role
 });
 
 //declaramos el esquema para la actualizacion de un usuario

@@ -7,17 +7,18 @@ const boom = require('@hapi/boom');
 
 class ItemService {
   async create(data){
-    const newItem = await models.Item.create(data);
+    const newItem = await models.ItemOrder.create(data);
+
     return newItem;
   };
 
   async find(){
-    const rta= await models.Item.findAll();
+    const rta= await models.ItemOrder.findAll();
     return rta;
   };
 
   async findOne(id) {
-    const item = await models.Item.findByPk(id,{
+    const item = await models.ItemOrder.findByPk(id,{
       include:[
         {
           Association:'customer',
@@ -34,7 +35,7 @@ class ItemService {
   };
 
   async update(id,changes) {
-    const item = await models.Item.findByPk(id);
+    const item = await models.ItemOrder.findByPk(id);
     if(!item){
       throw boom.notFound('Item no encontrado');
     }
@@ -43,7 +44,7 @@ class ItemService {
   };
 
   async delete(id){
-    const item = await models.Item.findByPk(id);
+    const item = await models.ItemOrder.findByPk(id);
     if(!item){
       throw boom.notFound('Item no encontrado');
     }
